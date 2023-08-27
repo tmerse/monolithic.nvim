@@ -44,16 +44,18 @@ function M.open(args)
     return
   end
 
-  if args.ext then
-  	files = vim.tbl_filter(function(fn) 
-  		local ext = fn:match("%.([^.]*)$")
-  		return ext == args.ext end,
-  	files)
-  else
-  	files = vim.tbl_filter(function(fn) 
-  		local ext = fn:match("%.([^.]*)$")
-  		return valid_ext[ext] end, 
-  	files)
+  if args.filterFiles then
+    if args.ext then
+      files = vim.tbl_filter(function(fn)
+        local ext = fn:match("%.([^.]*)$")
+        return ext == args.ext end,
+        files)
+    else
+      files = vim.tbl_filter(function(fn)
+        local ext = fn:match("%.([^.]*)$")
+        return valid_ext[ext] end,
+        files)
+    end
   end
 
   if #files > max_files then
